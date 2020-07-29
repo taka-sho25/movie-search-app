@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../App.css";
+import styled from "styled-components";
 import Header from "./Header";
 import Movie from "./Movie";
 import Search from "./Search";
@@ -38,23 +38,47 @@ const App = () => {
   };
 
   return (
-    <div className="App">
+    <AppContent>
       <Header text="Search Movie App" />
       <Search search={search} />
-      <p className="App-intro">Sharing a few of our favourite movies</p>
-      <div className="movies">
+      <Intro>Sharing a few of our favourite movies</Intro>
+      <MoviesWrap>
         {loading && !errorMessage ? (
-          <span>loading...</span>
+          <Loading>loading...</Loading>
         ) : errorMessage ? (
-          <div className="errorMessage">{errorMessage}</div>
+          <ErrorMessage>{errorMessage}</ErrorMessage>
         ) : (
           movies.map((movie, index) => (
             <Movie key={`${index}-${movie.Title}`} movie={movie} />
           ))
         )}
-      </div>
-    </div>
+      </MoviesWrap>
+    </AppContent>
   );
 };
+
+const AppContent = styled.div`
+  text-align: center;
+`;
+
+const MoviesWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+`;
+
+const Intro = styled.p`
+  font-size: large;
+`;
+
+const Loading = styled.span`
+  margin: 0 auto;
+`;
+
+const ErrorMessage = styled.div`
+  margin: auto;
+  font-weight: bold;
+  color: rgb(161, 15, 15);
+`;
 
 export default App;
